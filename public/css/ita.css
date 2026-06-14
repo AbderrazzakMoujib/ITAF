@@ -1,0 +1,192 @@
+/* ============================================================
+   ITA — Industrial Transformation Africa
+   Styles globaux partagés entre toutes les pages
+   ============================================================ */
+
+:root {
+    --ita-red:    #E8002D;
+    --ita-dark:   #0A1628;
+    --ita-blue:   #4A90C4;
+    --ita-white:  #FFFFFF;
+    --ita-text:   #1A1A1A;
+    --ita-light:  #F5F5F5;
+    --ita-border: #DDDDDD;
+}
+
+/* ── Typographie ── */
+body {
+    font-family: 'Barlow', sans-serif;
+    color: var(--ita-text);
+}
+h1, h2, h3, h4, h5, h6,
+.heading, .navbar-brand-text, .stat-valeur, .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* ── Navbar visiteur ── */
+.ita-navbar { background: var(--ita-red); border-bottom: 4px solid var(--ita-dark); }
+.ita-navbar .navbar-brand-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-style: italic;
+    font-size: 1.3rem; color: #fff;
+    letter-spacing: .05em; line-height: 1.1;
+}
+.ita-navbar .event-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .8rem; color: rgba(255,255,255,.75);
+    letter-spacing: .08em; text-transform: uppercase;
+}
+
+/* ── Boutons ── */
+.btn-primary {
+    background: var(--ita-red); border-color: var(--ita-red);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+}
+.btn-primary:hover, .btn-primary:focus { background: #c4001f; border-color: #c4001f; }
+.btn-outline-primary { color: var(--ita-red); border-color: var(--ita-red); }
+.btn-outline-primary:hover { background: var(--ita-red); border-color: var(--ita-red); color: #fff; }
+
+/* ── Cards ── */
+.card { border: 1px solid var(--ita-border); border-radius: 6px; }
+.card-header {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+}
+
+/* ── Badges / Tags ── */
+.badge.bg-primary { background-color: var(--ita-red) !important; }
+.badge.bg-info    { background-color: var(--ita-blue) !important; }
+
+/* ── Pagination ── */
+.page-link { color: var(--ita-red); }
+.page-item.active .page-link { background: var(--ita-red); border-color: var(--ita-red); }
+
+/* ── Alertes ── */
+.alert-success { border-left: 4px solid #198754; }
+.alert-danger  { border-left: 4px solid var(--ita-red); }
+
+/* ── Footer ── */
+footer {
+    margin-top: 4rem; padding: 1.5rem 0;
+    background: var(--ita-dark); color: rgba(255,255,255,.45);
+    font-size: .8rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: .06em; text-transform: uppercase;
+}
+
+/* ── Admin sidebar ── */
+.sidebar { width: 250px; min-height: 100vh; background: var(--ita-dark); flex-shrink: 0; display: flex; flex-direction: column; }
+.sidebar .brand { padding: 1.25rem 1.25rem 1rem; border-bottom: 3px solid var(--ita-red); }
+.sidebar .brand-sub { font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; color: rgba(255,255,255,.5); letter-spacing: .08em; margin-top: 2px; }
+.sidebar .brand-badge { display: inline-block; background: var(--ita-red); color: white; font-family: 'Barlow Condensed', sans-serif; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; margin-top: 6px; }
+.sidebar .nav-section { padding: .5rem 1rem .25rem; font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); font-family: 'Barlow Condensed', sans-serif; margin-top: .5rem; }
+.sidebar .nav-link { color: rgba(255,255,255,.65); padding: .6rem 1.25rem; border-radius: 0; font-size: .875rem; font-weight: 500; transition: all .15s; border-left: 3px solid transparent; }
+.sidebar .nav-link:hover { background: rgba(255,255,255,.06); color: #fff; border-left-color: var(--ita-blue); }
+.sidebar .nav-link.active { background: rgba(232,0,45,.15); color: #fff; border-left-color: var(--ita-red); font-weight: 600; }
+.sidebar .nav-link i { margin-right: .5rem; }
+.sidebar-footer { margin-top: auto; padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,.1); font-size: .7rem; color: rgba(255,255,255,.3); font-family: 'Barlow Condensed', sans-serif; }
+
+/* ── Admin topbar ── */
+.topbar { background: #fff; border-bottom: 3px solid var(--ita-red); padding: .875rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.topbar h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.3rem; color: var(--ita-dark); letter-spacing: .03em; text-transform: uppercase; }
+.page-body { padding: 1.5rem; flex: 1; }
+.main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+/* ── Admin stat cards ── */
+.stat-card { border: none; border-radius: 6px; padding: 1.25rem 1.5rem; position: relative; overflow: hidden; }
+.stat-card .stat-icon { position: absolute; right: 1.25rem; top: 1.25rem; font-size: 2.5rem; opacity: .12; }
+.stat-card .stat-valeur { font-family: 'Barlow Condensed', sans-serif; font-size: 2.75rem; font-weight: 800; line-height: 1; }
+.stat-card .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: .9rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; opacity: .85; margin-top: .25rem; }
+.stat-inscrits { background: var(--ita-red);  color: white; }
+.stat-presents { background: var(--ita-dark); color: white; }
+.stat-absents  { background: var(--ita-blue); color: white; }
+.stat-taux     { background: #1A1A1A;          color: white; }
+
+/* ── Admin tables ── */
+.table thead th {
+    background: var(--ita-dark); color: rgba(255,255,255,.8);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; border: none; padding: .75rem 1rem;
+}
+.table tbody tr:hover { background: #fdf5f6; }
+.table tbody td { color: var(--ita-text); border-color: var(--ita-border); padding: .65rem 1rem; }
+
+/* ── Admin card header ── */
+.card-header-ita {
+    background: var(--ita-dark) !important; color: white !important;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: .9rem; letter-spacing: .06em; text-transform: uppercase;
+}
+.card-header-ita i { color: var(--ita-red); }
+.card-header-ita .text-muted { color: rgba(255,255,255,.4) !important; font-size: .75rem; }
+
+/* ── Badges statut ── */
+.badge-present { background: var(--ita-dark); color: white; font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 3px; }
+.badge-absent  { background: var(--ita-light); color: #888; font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 3px; border: 1px solid var(--ita-border); }
+.badge-premier { background: var(--ita-dark); color: white; font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 3px; }
+.badge-double  { background: var(--ita-blue); color: white; font-family: 'Barlow Condensed', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 3px; }
+
+/* ── Nom visiteur dans tableaux ── */
+.nom-visiteur { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .95rem; text-transform: uppercase; color: var(--ita-dark); }
+.heure-scan   { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--ita-red); }
+
+/* ── Avatar cercle ── */
+.avatar-circle { width: 36px; height: 36px; border-radius: 50%; background: var(--ita-red); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .9rem; flex-shrink: 0; }
+
+/* ── Lien ITA ── */
+.link-ita { color: var(--ita-red); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; font-size: .8rem; }
+.link-ita:hover { color: #c4001f; }
+
+/* ── Progress bar ── */
+.progress-bar { background-color: var(--ita-red) !important; }
+
+/* ── Hero visiteur ── */
+.page-hero { background: var(--ita-dark); padding: 2.5rem 0 2rem; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--ita-red); }
+.page-hero .event-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-style: italic; font-size: 2.2rem; color: #fff; letter-spacing: .03em; text-transform: uppercase; line-height: 1.1; }
+.page-hero .event-title span { color: var(--ita-red); }
+.page-hero .event-meta { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; color: rgba(255,255,255,.6); letter-spacing: .08em; text-transform: uppercase; margin-top: .5rem; }
+.page-hero .event-meta .sep { margin: 0 .75rem; color: var(--ita-red); }
+
+/* ── Hero confirmation ── */
+.hero-confirmed { background: var(--ita-dark); padding: 2.5rem 0 2rem; position: relative; overflow: hidden; }
+.hero-confirmed::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--ita-red) 60%, var(--ita-blue) 100%); }
+.hero-confirmed .confirmed-label { display: inline-flex; align-items: center; gap: .5rem; background: rgba(232,0,45,.2); border: 1px solid var(--ita-red); color: var(--ita-red); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .9rem; border-radius: 3px; margin-bottom: 1rem; }
+.hero-confirmed .welcome-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-style: italic; font-size: 2rem; color: #fff; text-transform: uppercase; letter-spacing: .03em; line-height: 1.1; }
+.hero-confirmed .event-meta { font-family: 'Barlow Condensed', sans-serif; font-size: .9rem; color: rgba(255,255,255,.5); letter-spacing: .08em; text-transform: uppercase; margin-top: .5rem; }
+.hero-confirmed .event-meta .sep { color: var(--ita-red); margin: 0 .5rem; }
+
+/* ── Formulaire ── */
+.form-card { background: #fff; border: 1px solid var(--ita-border); border-top: 4px solid var(--ita-red); border-radius: 0 0 6px 6px; padding: 2rem 2.5rem; }
+.section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ita-dark); border-left: 4px solid var(--ita-red); padding-left: .75rem; margin-bottom: 1.5rem; }
+.form-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; color: #444; }
+.form-control, .form-select { background: var(--ita-light); border-color: var(--ita-border); color: var(--ita-text); border-radius: 4px; font-size: .9rem; }
+.form-control:focus, .form-select:focus { border-color: var(--ita-red); box-shadow: 0 0 0 3px rgba(232,0,45,.12); background: white; }
+.btn-submit { background: var(--ita-red); border: none; color: white; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: .08em; text-transform: uppercase; padding: .85rem 2rem; border-radius: 4px; transition: background .2s; width: 100%; }
+.btn-submit:hover { background: #c4001f; color: white; }
+.required-star { color: var(--ita-red); }
+.privacy-note { font-size: .8rem; color: #888; text-align: center; margin-top: 1rem; }
+
+/* ── Confirmation page ── */
+.qr-card { background: #fff; border: 1px solid var(--ita-border); border-top: 4px solid var(--ita-red); border-radius: 4px; padding: 1.5rem; text-align: center; }
+.qr-card .qr-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ita-dark); margin-bottom: 1rem; }
+.qr-card img { width: 220px; height: 220px; display: block; margin: 0 auto; border: 2px solid var(--ita-border); padding: 8px; background: white; }
+.btn-download { background: var(--ita-dark); color: white; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .95rem; letter-spacing: .06em; text-transform: uppercase; border: none; border-radius: 4px; padding: .6rem 1.25rem; width: 100%; margin-top: 1rem; text-decoration: none; display: block; transition: background .2s; }
+.btn-download:hover { background: var(--ita-red); color: white; }
+.badge-recap { background: #fff; border: 1px solid var(--ita-border); border-left: 5px solid var(--ita-red); border-radius: 0 4px 4px 0; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+.badge-recap .badge-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--ita-dark); text-transform: uppercase; letter-spacing: .02em; line-height: 1.1; }
+.badge-recap .badge-detail { font-size: .875rem; color: #555; margin-top: .25rem; }
+.badge-recap .badge-company { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ita-blue); text-transform: uppercase; letter-spacing: .04em; }
+.step-card { background: #fff; border: 1px solid var(--ita-border); border-radius: 4px; padding: 1rem 1.25rem; margin-bottom: .75rem; display: flex; align-items: center; gap: 1rem; }
+.step-num { width: 40px; height: 40px; background: var(--ita-red); color: white; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; flex-shrink: 0; }
+.step-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .95rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ita-dark); }
+.step-desc { font-size: .8rem; color: #666; }
+.email-alert { background: #f0f7ff; border: 1px solid var(--ita-blue); border-left: 4px solid var(--ita-blue); border-radius: 4px; padding: .85rem 1rem; margin-bottom: 1rem; font-size: .875rem; color: var(--ita-dark); }
+
+/* ── Filtres admin ── */
+.filter-bar .form-control:focus,
+.filter-bar .form-select:focus { border-color: var(--ita-red); box-shadow: 0 0 0 3px rgba(232,0,45,.1); }

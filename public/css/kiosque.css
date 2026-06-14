@@ -1,0 +1,455 @@
+/* ============================================================
+   ITA — Kiosque Scanner
+   ============================================================ */
+
+:root {
+    --ita-red:    #E8002D;
+    --ita-dark:   #0A1628;
+    --ita-blue:   #4A90C4;
+    --ita-white:  #FFFFFF;
+    --ita-light:  #F5F5F5;
+    --ita-border: #DDDDDD;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    height: 100vh;
+    font-family: 'Barlow', sans-serif;
+    background: var(--ita-dark);
+    color: var(--ita-white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* ─── Header ─────────────────────────────────── */
+.kiosque-header {
+    background: var(--ita-red);
+    padding: .75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid var(--ita-dark);
+    flex-shrink: 0;
+}
+.kiosque-header .logo-zone {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.kiosque-header .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    line-height: 1.15;
+}
+.kiosque-header .logo-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .7rem;
+    color: rgba(255,255,255,.7);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+.kiosque-header .heure {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── Layout ──────────────────────────────────── */
+.kiosque-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    overflow: hidden;
+}
+
+/* ─── Zone scan gauche ────────────────────────── */
+.scan-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    background: var(--ita-dark);
+}
+
+#video-camera {
+    width: 380px;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 3px solid rgba(255,255,255,.15);
+    display: block;
+}
+#canvas-qr { display: none; }
+
+.scan-overlay {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+.scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ita-red), transparent);
+    animation: scanLine 2.5s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--ita-red);
+}
+@keyframes scanLine {
+    0%   { top: 10%; }
+    50%  { top: 88%; }
+    100% { top: 10%; }
+}
+.scan-corner {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-color: var(--ita-red);
+    border-style: solid;
+}
+.scan-corner.tl { top: 10px; left: 10px;   border-width: 4px 0 0 4px; }
+.scan-corner.tr { top: 10px; right: 10px;  border-width: 4px 4px 0 0; }
+.scan-corner.bl { bottom: 10px; left: 10px;  border-width: 0 0 4px 4px; }
+.scan-corner.br { bottom: 10px; right: 10px; border-width: 0 4px 4px 0; }
+
+#input-douchette {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: .75rem;
+    margin-top: 1.25rem;
+}
+.btn-mode {
+    padding: .45rem 1.25rem;
+    border-radius: 4px;
+    border: 2px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.5);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: .85rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .2s;
+}
+.btn-mode.actif {
+    border-color: var(--ita-red);
+    color: var(--ita-white);
+    background: rgba(232,0,45,.2);
+}
+.scan-hint {
+    margin-top: .75rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .8rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+}
+
+/* ─── Panneau résultat droite ─────────────────── */
+.resultat-panel {
+    background: #0d1e35;
+    border-left: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.panel-header {
+    background: rgba(232,0,45,.12);
+    border-bottom: 1px solid rgba(232,0,45,.25);
+    padding: .6rem 1.25rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ita-red);
+}
+.resultat-scan {
+    flex-shrink: 0;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Statuts */
+.statut-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .3rem .85rem;
+    border-radius: 3px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 1rem;
+}
+.statut-attente { background: rgba(255,255,255,.05); color: rgba(255,255,255,.35); }
+.statut-nouveau  { background: rgba(232,0,45,.2);   color: var(--ita-red);  border: 1px solid var(--ita-red); }
+.statut-double   { background: rgba(74,144,196,.2); color: var(--ita-blue); border: 1px solid var(--ita-blue); }
+.statut-inconnu  { background: rgba(232,0,45,.1);   color: #ff6b6b;         border: 1px solid #ff6b6b; }
+
+.visiteur-nom {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--ita-white);
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: .25rem;
+}
+.visiteur-entreprise {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ita-blue);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.visiteur-fonction { font-size: .875rem; color: rgba(255,255,255,.45); }
+.scan-info {
+    margin-top: 1rem;
+    font-size: .78rem;
+    color: rgba(255,255,255,.3);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: .04em;
+}
+.alerte-double {
+    background: rgba(74,144,196,.1);
+    border: 1px solid var(--ita-blue);
+    border-radius: 4px;
+    padding: .75rem 1rem;
+    margin-top: .75rem;
+    font-size: .85rem;
+    color: var(--ita-blue);
+    font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* Pulse */
+.pulse-rouge { animation: pulseRouge 0.6s ease-out; }
+@keyframes pulseRouge {
+    0%   { box-shadow: 0 0 0 0   rgba(232,0,45,.6); }
+    70%  { box-shadow: 0 0 0 20px rgba(232,0,45,0); }
+    100% { box-shadow: 0 0 0 0   rgba(232,0,45,0); }
+}
+
+/* ─── Scans récents ───────────────────────────── */
+.scans-recents {
+    flex: 1;
+    overflow-y: auto;
+    padding: .75rem 1.25rem;
+}
+.scan-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    font-size: .85rem;
+}
+.scan-item .scan-nom {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    color: rgba(255,255,255,.8);
+    text-transform: uppercase;
+}
+.scan-item .scan-societe { color: rgba(255,255,255,.3); font-size: .75rem; }
+.scan-item .scan-heure {
+    font-family: 'Barlow Condensed', sans-serif;
+    color: var(--ita-red);
+    font-size: .8rem;
+    flex-shrink: 0;
+    font-weight: 700;
+}
+
+/* ─── Badge preview (70mm × 40mm proportions) ────── */
+.badge-preview-wrap {
+    padding: 1rem 1.25rem 1.25rem;
+    border-top: 1px solid rgba(255,255,255,.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.badge-preview-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.25);
+    margin-bottom: .6rem;
+    align-self: flex-start;
+}
+/* Ratio 70mm / 40mm = 1.75 */
+.badge-tiki {
+    width: 100%;
+    max-width: 315px;          /* 315 / 180 = 1.75 */
+    height: 180px;
+    background: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0,0,0,.5);
+    position: relative;
+}
+.badge-tiki-header {
+    background: #E8002D;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.badge-tiki-header img {
+    height: 22px;
+    width: auto;
+}
+.badge-tiki-header-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: .62rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    line-height: 1.1;
+}
+.badge-tiki-body {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    padding: 8px 10px 8px 12px;
+    gap: 8px;
+}
+.badge-tiki-infos {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+.badge-tiki-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #0A1628;
+    text-transform: uppercase;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.badge-tiki-company {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: .68rem;
+    color: #4A90C4;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.badge-tiki-position {
+    font-size: .6rem;
+    color: #666;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.badge-tiki-qr {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.badge-tiki-qr img {
+    width: 72px;
+    height: 72px;
+    display: block;
+    image-rendering: pixelated;
+}
+.badge-tiki-footer {
+    background: #0A1628;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.badge-tiki-footer span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: .45rem;
+    color: rgba(255,255,255,.4);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+.badge-tiki.vide .badge-tiki-name { color: #ccc; font-style: italic; font-weight: 400; font-size: .75rem; }
+
+.btn-print-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: .6rem 1rem;
+    background: var(--ita-red);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .15s;
+}
+.btn-print-badge:hover  { background: #c50026; }
+.btn-print-badge:active { background: #a5001f; }
+
+/* Flash plein écran */
+.flash-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(232,0,45,.12);
+    z-index: 9999;
+    pointer-events: none;
+}
+.flash-overlay.bleu { background: rgba(74,144,196,.12); }
